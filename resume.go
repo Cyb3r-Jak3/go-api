@@ -2,6 +2,7 @@ package main
 
 import (
 	"io"
+	"io/ioutil"
 	"net/http"
 	"os"
 
@@ -46,12 +47,12 @@ func encryptResume(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	defer file.Close()
-	fileContent, err := io.ReadAll(file)
+	fileContent, err := ioutil.ReadAll(file)
 	if err != nil {
 		httpError(w, err, "Error reading the key body", http.StatusBadRequest)
 		return
 	}
-	resume, err := os.ReadFile(resumeFilePath)
+	resume, err := ioutil.ReadFile(resumeFilePath)
 	if err != nil {
 		httpError(w, err, "Error reading saved resume", http.StatusBadRequest)
 		return
