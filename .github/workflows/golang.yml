@@ -8,6 +8,7 @@ on:
       - '**'
     paths:
       - 'go.sum'
+      - 'go.mod'
       - '**.go'
       - .github/workflows/golang.yml
   pull_request:
