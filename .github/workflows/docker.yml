@@ -12,7 +12,7 @@ on:
       - .github/workflows/docker.yml
 
 jobs:
-  Build:
+  Docker:
     runs-on: ubuntu-latest
     steps:
       - name: Docker Meta

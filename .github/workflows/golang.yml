@@ -16,7 +16,7 @@ on:
       - main
 
 jobs:
-  test:
+  Go:
     runs-on: ubuntu-latest
     env:
       GO111MODULE: on
