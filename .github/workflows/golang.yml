@@ -45,8 +45,8 @@ jobs:
         go get -u golang.org/x/lint/golint
         go get -u github.com/securego/gosec/v2/cmd/gosec
 
-    - name: Lint
-      run: make lint
+    # - name: Lint
+    #   run: make lint
 
     - name: Test
       run: make test
