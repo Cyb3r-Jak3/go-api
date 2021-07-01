@@ -41,7 +41,6 @@ jobs:
 
     - name: Get Extra
       run: |
-        go get ./...
         go get -u golang.org/x/lint/golint
         go get -u github.com/securego/gosec/v2/cmd/gosec
 
@@ -59,6 +58,9 @@ jobs:
       with:
         sarif_file: security.sarif
 
+    - name: Build
+      run: go build -o api-${{ github.sha }}
+
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
@@ -66,6 +68,4 @@ jobs:
         path: |
           security.sarif
           c.out
-
-    - name: Build
-      run: go build -v
+          api-${{ github.sha }}
