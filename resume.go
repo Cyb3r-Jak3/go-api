@@ -40,6 +40,10 @@ func getResume() {
 
 func encryptResume(w http.ResponseWriter, req *http.Request) {
 	// Limit request body to 5 KB
+	if req.Method == "GET" {
+		http.Redirect(w, req, "https://www.jwhite.network", http.StatusPermanentRedirect)
+		return
+	}
 	req.Body = http.MaxBytesReader(w, req.Body, 5000)
 	file, _, err := req.FormFile("key")
 	if err != nil {
