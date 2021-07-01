@@ -70,9 +70,3 @@ func TestEncryptResumeEmpty(t *testing.T) {
 	rr := executeRequest(r, encryptResume)
 	checkResponse(t, rr, http.StatusBadRequest)
 }
-
-func TestEncryptResumeRedirect(t *testing.T) {
-	r, _ := http.NewRequest("GET", "/", nil)
-	rr := executeRequest(r, encryptResume)
-	checkResponse(t, rr, http.StatusPermanentRedirect)
-}
