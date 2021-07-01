@@ -46,6 +46,7 @@ jobs:
           push: ${{ startsWith(github.ref, 'refs/tags/v') }}
           file: Dockerfile
           tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
       -
         # Temp fix
