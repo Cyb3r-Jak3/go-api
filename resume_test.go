@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"io"
+	"io/ioutil"
 	"mime/multipart"
 	"net/http"
 	"os"
@@ -36,7 +37,7 @@ func getPublicKey() {
 func TestEncryptResume(t *testing.T) {
 	getPublicKey()
 	file, _ := os.Open("key.asc")
-	fileContents, _ := io.ReadAll(file)
+	fileContents, _ := ioutil.ReadAll(file)
 	file.Close()
 	body := new(bytes.Buffer)
 	writer := multipart.NewWriter(body)
@@ -51,7 +52,7 @@ func TestEncryptResume(t *testing.T) {
 
 func TestEncryptResumeBadFile(t *testing.T) {
 	file, _ := os.Open("main.go")
-	fileContents, _ := io.ReadAll(file)
+	fileContents, _ := ioutil.ReadAll(file)
 	file.Close()
 	body := new(bytes.Buffer)
 	writer := multipart.NewWriter(body)
