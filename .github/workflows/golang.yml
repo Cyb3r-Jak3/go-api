@@ -41,6 +41,7 @@ jobs:
 
     - name: Get Extra
       run: |
+        go get ./...
         go get -u golang.org/x/lint/golint
         go get -u github.com/securego/gosec/v2/cmd/gosec
 
