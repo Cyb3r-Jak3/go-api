@@ -39,11 +39,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Get Extra
-      run: |
-        go get -u golang.org/x/lint/golint
-        go get -u github.com/securego/gosec/v2/cmd/gosec
-
     - name: Lint
       run: make lint
 

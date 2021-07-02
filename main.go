@@ -6,6 +6,7 @@ import (
 
 	common "github.com/Cyb3r-Jak3/common/go"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 	"github.com/sirupsen/logrus"
 )
 
@@ -39,7 +40,8 @@ func main() {
 	r.HandleFunc("/git/repos/list", common.AllowedMethod(gitReposList, "GET,OPTIONS"))
 	r.HandleFunc("/git/user", common.AllowedMethod(gitUser, "GET,OPTIONS"))
 	log.Info("Starting")
-	if err := http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), r); err != nil {
+	handler := cors.Default().Handler(r)
+	if err := http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), handler); err != nil {
 		log.WithError(err).Fatal("Error running server")
 	}
 
