@@ -21,3 +21,7 @@ test:
 scan:
 	gosec -no-fail -fmt json -out security.json ./...
 	gosec -no-fail -fmt sarif -out security.sarif ./...
+
+run:
+	go build -o api
+	api
