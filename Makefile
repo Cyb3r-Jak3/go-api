@@ -25,3 +25,6 @@ scan:
 run:
 	go build -o api
 	api
+
+bench:
+	go test -bench=. ./...

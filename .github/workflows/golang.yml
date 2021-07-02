@@ -49,6 +49,9 @@ jobs:
 
     - name: Test
       run: make test
+    
+    - name: Benchmark
+      run: make bench
 
     - name: Gosec Security Scanner
       run: make scan

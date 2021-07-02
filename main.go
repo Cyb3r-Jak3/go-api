@@ -6,13 +6,16 @@ import (
 
 	common "github.com/Cyb3r-Jak3/common/go"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 	"github.com/sirupsen/logrus"
 )
 
 var (
-	log  = logrus.New()
-	host string
-	port string
+	corsdomains = []string{"https://*.jwhite.network"}
+	log         = logrus.New()
+	host        string
+	port        string
+	c           *cors.Cors
 )
 
 func httpError(w http.ResponseWriter, err error, message string, statusCode int) {
@@ -28,6 +31,14 @@ func init() {
 	getResume()
 	host = common.GetEnv("HOST", "")
 	port = common.GetEnv("PORT", "5000")
+	prod := common.GetEnv("PRODUCTION", "FALSE") == "TRUE"
+	if prod {
+		c = cors.New(cors.Options{
+			AllowedOrigins: corsdomains,
+		})
+	} else {
+		c = cors.Default()
+	}
 }
 func main() {
 	log.SetLevel(logrus.DebugLevel)
@@ -39,7 +50,8 @@ func main() {
 	r.HandleFunc("/git/repos/list", common.AllowedMethod(gitReposList, "GET,OPTIONS"))
 	r.HandleFunc("/git/user", common.AllowedMethod(gitUser, "GET,OPTIONS"))
 	log.Info("Starting")
-	if err := http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), r); err != nil {
+	handler := c.Handler(r)
+	if err := http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), handler); err != nil {
 		log.WithError(err).Fatal("Error running server")
 	}
 
