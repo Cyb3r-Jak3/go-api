@@ -41,7 +41,7 @@ jobs:
 
     - name: Lint
       run: |
-        go ./...
+        go get ./...
         make lint
 
     - name: Test
