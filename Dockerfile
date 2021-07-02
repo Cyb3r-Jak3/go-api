@@ -9,5 +9,6 @@ RUN go build -o /go/bin/app
 
 FROM gcr.io/distroless/static
 COPY --from=build /go/bin/app /
+ENV PRODUCTION=TRUE
 EXPOSE 5000
 CMD ["/app"]
