@@ -1,7 +1,6 @@
 package main
 
 import (
-	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -21,20 +20,12 @@ func getResume() {
 		return
 	}
 	log.Debug("Downloading resume")
-	out, err := os.Create(resumeFilePath)
+	ok, err := common.DownloadFile(resumeURL, resumeFilePath)
 	if err != nil {
-		log.WithError(err).Fatal("Error when creating resume file path")
+		log.WithError(err).Fatal("Error download resume")
 	}
-	resp, err := http.Get(resumeURL)
-	if err != nil {
-		log.WithError(err).Fatal("Error downloading resume")
-	}
-	defer resp.Body.Close()
-	if _, err := io.Copy(out, resp.Body); err != nil {
-		log.WithError(err).Fatal("Error saving resume")
-	}
-	if err := out.Close(); err != nil {
-		log.WithError(err).Error("Error closing file")
+	if !ok {
+		log.Fatal("Download reported failed")
 	}
 }
 

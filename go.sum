@@ -1,6 +1,8 @@
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/Cyb3r-Jak3/common v0.1.1 h1:igClXoOa8WoUN+xZNCBSvjwIGu+uypnCzrLLtxiOE2c=
 github.com/Cyb3r-Jak3/common v0.1.1/go.mod h1:cZCt43kS7xMoOmVKiNPyVzc94ICPijOJGUwACZKCPWw=
+github.com/Cyb3r-Jak3/common v0.1.3 h1:lCkTGQXFcC1sgtNad+GEDpdRyw5JADYhZqDpukSWqVc=
+github.com/Cyb3r-Jak3/common v0.1.3/go.mod h1:cZCt43kS7xMoOmVKiNPyVzc94ICPijOJGUwACZKCPWw=
 github.com/ProtonMail/go-crypto v0.0.0-20210512092938-c05353c2d58c h1:bNpaLLv2Y4kslsdkdCwAYu8Bak1aGVtxwi8Z/wy4Yuo=
 github.com/ProtonMail/go-crypto v0.0.0-20210512092938-c05353c2d58c/go.mod h1:z4/9nQmJSSwwds7ejkxaJwO37dru3geImFUdJlaLzQo=
 github.com/ProtonMail/go-mime v0.0.0-20190923161245-9b5a4261663a h1:W6RrgN/sTxg1msqzFFb+G80MFmpjMw61IU+slm+wln4=
