@@ -17,6 +17,15 @@ func TestGitUser(t *testing.T) {
 	}
 }
 
+func BenchmarkGitUser(b *testing.B) {
+	r, _ := http.NewRequest("GET", "/", nil)
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		executeRequest(r, gitUser)
+	}
+}
+
 func TestGitRepos(t *testing.T) {
 	r, _ := http.NewRequest("GET", "/", nil)
 	rr := executeRequest(r, gitRepos)
