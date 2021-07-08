@@ -2,12 +2,13 @@ package main
 
 import (
 	"bytes"
-	"io"
 	"io/ioutil"
 	"mime/multipart"
 	"net/http"
 	"os"
 	"testing"
+
+	common "github.com/Cyb3r-Jak3/common/go"
 )
 
 func TestGetResume(t *testing.T) {
@@ -17,25 +18,8 @@ func TestGetResume(t *testing.T) {
 	getResume()
 }
 
-func getPublicKey() {
-	out, err := os.Create("key.asc")
-	if err != nil {
-		log.WithError(err).Fatal("Error when creating resume file path")
-	}
-	resp, err := http.Get("https://www.jwhite.network/keys/WebsitePublic.asc")
-	if err != nil {
-		log.WithError(err).Fatal("Error downloading resume")
-	}
-	defer resp.Body.Close()
-	if _, err := io.Copy(out, resp.Body); err != nil {
-		log.WithError(err).Fatal("Error saving resume")
-	}
-	if err := out.Close(); err != nil {
-		log.WithError(err).Error("Error closing file")
-	}
-}
 func TestEncryptResume(t *testing.T) {
-	getPublicKey()
+	common.DownloadFile("https://www.jwhite.network/keys/WebsitePublic.asc", "key.asc")
 	file, _ := os.Open("key.asc")
 	fileContents, _ := ioutil.ReadAll(file)
 	file.Close()
@@ -51,7 +35,7 @@ func TestEncryptResume(t *testing.T) {
 }
 
 func BenchmarkEncryptResume(b *testing.B) {
-	getPublicKey()
+	common.DownloadFile("https://www.jwhite.network/keys/WebsitePublic.asc", "key.asc")
 	file, _ := os.Open("key.asc")
 	fileContents, _ := ioutil.ReadAll(file)
 	file.Close()
