@@ -36,12 +36,13 @@ func init() {
 		c = cors.New(cors.Options{
 			AllowedOrigins: corsdomains,
 		})
+		log.SetLevel(logrus.WarnLevel)
 	} else {
 		c = cors.Default()
+		log.SetLevel(logrus.DebugLevel)
 	}
 }
 func main() {
-	log.SetLevel(logrus.DebugLevel)
 	r := mux.NewRouter()
 	r.HandleFunc("/", redirect)
 	r.NotFoundHandler = http.HandlerFunc(redirect)

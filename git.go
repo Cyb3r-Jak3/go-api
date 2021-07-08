@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"net/http"
+	"time"
 
 	common "github.com/Cyb3r-Jak3/common/go"
 	"github.com/google/go-github/v35/github"
@@ -13,27 +14,57 @@ type condensedRepoInfo struct {
 	URL  string `json:"url"`
 }
 
+type reposCache struct {
+	repos             []*github.Repository
+	CheckTime         time.Time
+	condensedRepoInfo []condensedRepoInfo
+}
+
 type extendedUserInfo struct {
 	*github.User
 	GitLabURL string `json:"gitlab_url"`
+	CheckTime time.Time
 }
 
-var githubClient = github.NewClient(&http.Client{})
+var (
+	githubClient  = github.NewClient(&http.Client{})
+	gitUserInfo   = &extendedUserInfo{}
+	gitReposCache = &reposCache{}
+)
 
 const (
 	githubUser = "Cyb3r-Jak3"
+	cacheTime  = 1
 )
 
 func gitRepos(w http.ResponseWriter, req *http.Request) {
+	now := time.Now()
+	cacheTime := now.Add(-cacheTime * time.Hour)
+	if gitReposCache.CheckTime.After(cacheTime) {
+		log.Debug("Serveing cache repos")
+		common.JSONMarshalResponse(w, gitReposCache.repos)
+		return
+	}
 	repos, _, err := githubClient.Repositories.List(context.TODO(), githubUser, nil)
 	if err != nil {
 		httpError(w, err, "Error getting repos", http.StatusInternalServerError)
 		return
 	}
-	common.JSONMarshalResponse(w, repos)
+	gitReposCache = &reposCache{
+		repos:     repos,
+		CheckTime: now,
+	}
+	common.JSONMarshalResponse(w, gitReposCache.repos)
 }
 
 func gitReposList(w http.ResponseWriter, req *http.Request) {
+	now := time.Now()
+	cacheTime := now.Add(-cacheTime * time.Hour)
+	if gitReposCache.CheckTime.After(cacheTime) {
+		log.Debug("Serveing cache repos list")
+		common.JSONMarshalResponse(w, gitReposCache.condensedRepoInfo)
+		return
+	}
 	repos, _, err := githubClient.Repositories.List(context.TODO(), githubUser, nil)
 	if err != nil {
 		httpError(w, err, "Error getting repos", http.StatusInternalServerError)
@@ -43,10 +74,22 @@ func gitReposList(w http.ResponseWriter, req *http.Request) {
 	for _, i := range repos {
 		responseBody = append(responseBody, condensedRepoInfo{Name: i.GetName(), URL: i.GetURL()})
 	}
-	common.JSONMarshalResponse(w, responseBody)
+	gitReposCache = &reposCache{
+		repos:             repos,
+		CheckTime:         now,
+		condensedRepoInfo: responseBody,
+	}
+	common.JSONMarshalResponse(w, gitReposCache.condensedRepoInfo)
 
 }
 func gitUser(w http.ResponseWriter, req *http.Request) {
+	now := time.Now()
+	cacheTime := now.Add(-cacheTime * time.Hour)
+	if gitUserInfo.CheckTime.After(cacheTime) {
+		log.Debug("Serveing cache user")
+		common.JSONMarshalResponse(w, gitUserInfo)
+		return
+	}
 	user, _, err := githubClient.Users.Get(context.TODO(), githubUser)
 	if err != nil {
 		httpError(w, err, "Error gettings GitHub User", http.StatusInternalServerError)
@@ -55,10 +98,11 @@ func gitUser(w http.ResponseWriter, req *http.Request) {
 	publicEmail := "cyb3rjak3@pm.me"
 	user.Email = &publicEmail
 	user.URL = user.HTMLURL
-	extendedInfo := &extendedUserInfo{
-		User: user,
+	gitUserInfo = &extendedUserInfo{
+		User:      user,
+		GitLabURL: "https://gitlab.com/Cyb3r-Jak3",
+		CheckTime: now,
 	}
-	extendedInfo.GitLabURL = "https://gitlab.com/Cyb3r-Jak3"
-	common.JSONMarshalResponse(w, extendedInfo)
+	common.JSONMarshalResponse(w, gitUserInfo)
 
 }
