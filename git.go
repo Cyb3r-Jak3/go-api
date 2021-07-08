@@ -34,11 +34,12 @@ var (
 
 const (
 	githubUser = "Cyb3r-Jak3"
+	cacheTime  = 1
 )
 
 func gitRepos(w http.ResponseWriter, req *http.Request) {
 	now := time.Now()
-	cacheTime := now.Add(-1 * time.Hour)
+	cacheTime := now.Add(-cacheTime * time.Hour)
 	if gitReposCache.CheckTime.After(cacheTime) {
 		log.Debug("Serveing cache repos")
 		common.JSONMarshalResponse(w, gitReposCache.repos)
@@ -58,7 +59,7 @@ func gitRepos(w http.ResponseWriter, req *http.Request) {
 
 func gitReposList(w http.ResponseWriter, req *http.Request) {
 	now := time.Now()
-	cacheTime := now.Add(-1 * time.Hour)
+	cacheTime := now.Add(-cacheTime * time.Hour)
 	if gitReposCache.CheckTime.After(cacheTime) {
 		log.Debug("Serveing cache repos list")
 		common.JSONMarshalResponse(w, gitReposCache.condensedRepoInfo)
@@ -83,7 +84,7 @@ func gitReposList(w http.ResponseWriter, req *http.Request) {
 }
 func gitUser(w http.ResponseWriter, req *http.Request) {
 	now := time.Now()
-	cacheTime := now.Add(-1 * time.Hour)
+	cacheTime := now.Add(-cacheTime * time.Hour)
 	if gitUserInfo.CheckTime.After(cacheTime) {
 		log.Debug("Serveing cache user")
 		common.JSONMarshalResponse(w, gitUserInfo)
