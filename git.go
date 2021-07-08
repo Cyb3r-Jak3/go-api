@@ -15,8 +15,9 @@ type condensedRepoInfo struct {
 }
 
 type reposCache struct {
-	repos     []*github.Repository
-	CheckTime time.Time
+	repos             []*github.Repository
+	CheckTime         time.Time
+	condensedRepoInfo []condensedRepoInfo
 }
 
 type extendedUserInfo struct {
@@ -52,10 +53,17 @@ func gitRepos(w http.ResponseWriter, req *http.Request) {
 		repos:     repos,
 		CheckTime: now,
 	}
-	common.JSONMarshalResponse(w, repos)
+	common.JSONMarshalResponse(w, gitReposCache.repos)
 }
 
 func gitReposList(w http.ResponseWriter, req *http.Request) {
+	now := time.Now()
+	cacheTime := now.Add(-1 * time.Hour)
+	if gitReposCache.CheckTime.After(cacheTime) {
+		log.Debug("Serveing cache repos list")
+		common.JSONMarshalResponse(w, gitReposCache.condensedRepoInfo)
+		return
+	}
 	repos, _, err := githubClient.Repositories.List(context.TODO(), githubUser, nil)
 	if err != nil {
 		httpError(w, err, "Error getting repos", http.StatusInternalServerError)
@@ -65,7 +73,12 @@ func gitReposList(w http.ResponseWriter, req *http.Request) {
 	for _, i := range repos {
 		responseBody = append(responseBody, condensedRepoInfo{Name: i.GetName(), URL: i.GetURL()})
 	}
-	common.JSONMarshalResponse(w, responseBody)
+	gitReposCache = &reposCache{
+		repos:             repos,
+		CheckTime:         now,
+		condensedRepoInfo: responseBody,
+	}
+	common.JSONMarshalResponse(w, gitReposCache.condensedRepoInfo)
 
 }
 func gitUser(w http.ResponseWriter, req *http.Request) {
