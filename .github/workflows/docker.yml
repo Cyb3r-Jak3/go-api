@@ -28,7 +28,7 @@ jobs:
 
       - name: Docker Meta
         id: meta
-        uses: docker/metadata-action@v3.4.0
+        uses: docker/metadata-action@v3.4.1
         with:
           images: ghcr.io/cyb3r-jak3/go-api
           labels: |
