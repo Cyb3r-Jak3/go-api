@@ -19,7 +19,6 @@ test:
 	go tool cover -func="c.out"
 
 scan:
-	gosec -no-fail -fmt json -out security.json ./...
 	gosec -no-fail -fmt sarif -out security.sarif ./...
 
 run:

@@ -50,6 +50,8 @@ func main() {
 	r.HandleFunc("/git/repos", common.AllowedMethod(gitRepos, "GET,OPTIONS"))
 	r.HandleFunc("/git/repos/list", common.AllowedMethod(gitReposList, "GET,OPTIONS"))
 	r.HandleFunc("/git/user", common.AllowedMethod(gitUser, "GET,OPTIONS"))
+	r.HandleFunc("/misc/gravatar", common.AllowedMethod(miscGravatarHash, "POST,OPTIONS"))
+	r.HandleFunc("/misc/string", common.AllowedMethod(miscStringChange, "POST,OPTIONS"))
 	log.Info("Starting")
 	handler := c.Handler(r)
 	if err := http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), handler); err != nil {
