@@ -11,9 +11,12 @@ import (
 	common "github.com/Cyb3r-Jak3/common/go"
 )
 
+//GravatarRequestBody represents the expected incoming JSON
 type GravatarRequestBody struct {
 	Email string `json:"email"`
 }
+
+//GravatarResponsetBody represents the outgoing JSON
 type GravatarResponsetBody struct {
 	Hash string `json:"hash"`
 }
@@ -39,11 +42,13 @@ func miscGravatarHash(w http.ResponseWriter, req *http.Request) {
 	common.JSONMarshalResponse(w, &GravatarResponsetBody{Hash: hex.EncodeToString(hash[:])})
 }
 
+//StringRequestBody represents the expected incoming JSON
 type StringRequestBody struct {
 	String       string `json:"string"`
 	Modification string `json:"modification"`
 }
 
+//StringResponseBody represents the outgoing JSON
 type StringResponseBody struct {
 	String string `json:"string"`
 }
