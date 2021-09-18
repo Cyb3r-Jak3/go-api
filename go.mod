@@ -3,7 +3,7 @@ module github.com/Cyb3r-Jak3/go-api
 go 1.17
 
 require (
-	github.com/Cyb3r-Jak3/common/go v0.0.0-20210602125323-400e31944d9a
+	github.com/Cyb3r-Jak3/common v0.1.4
 	github.com/ProtonMail/gopenpgp/v2 v2.2.2
 	github.com/google/go-github/v39 v39.0.0
 	github.com/gorilla/mux v1.8.0
@@ -19,4 +19,5 @@ require (
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
 	golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1 // indirect
 	golang.org/x/text v0.3.3 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
