@@ -16,7 +16,7 @@ on:
       - main
 
 permissions:
-  security events: write
+  security-events: write
   actions: write
 
 jobs:
