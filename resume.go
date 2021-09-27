@@ -30,11 +30,11 @@ func getResume() {
 }
 
 func encryptResume(w http.ResponseWriter, req *http.Request) {
-	// Limit request body to 5 KB
 	if req.Method == "GET" {
 		redirect(w, req)
 		return
 	}
+	// Limit request body to 5 KB
 	req.Body = http.MaxBytesReader(w, req.Body, 5000)
 	file, _, err := req.FormFile("key")
 	if err != nil {
