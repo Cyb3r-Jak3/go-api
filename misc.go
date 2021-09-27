@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 
-	common "github.com/Cyb3r-Jak3/common/go"
+	common "github.com/Cyb3r-Jak3/common/v2"
 )
 
 //GravatarRequestBody represents the expected incoming JSON
