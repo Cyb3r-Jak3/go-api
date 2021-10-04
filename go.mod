@@ -6,7 +6,7 @@ require (
 	github.com/Cyb3r-Jak3/common/v2 v2.0.1
 	github.com/ProtonMail/go-crypto v0.0.0-20210920160938-87db9fbc61c7 // indirect
 	github.com/ProtonMail/go-mime v0.0.0-20190923161245-9b5a4261663a // indirect
-	github.com/ProtonMail/gopenpgp/v2 v2.2.3
+	github.com/ProtonMail/gopenpgp/v2 v2.2.4
 	github.com/google/go-github/v39 v39.1.0
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/gorilla/mux v1.8.0
