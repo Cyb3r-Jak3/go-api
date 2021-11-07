@@ -66,19 +66,18 @@ func BenchmarkEncryptResume(b *testing.B) {
 func TestEncryptResumeBadFile(t *testing.T) {
 	file, _ := os.Open("main.go")
 	fileContents, _ := ioutil.ReadAll(file)
-	err := file.Close()
-	if err = file.Close(); err != nil {
+	if err := file.Close(); err != nil {
 		t.Errorf("Error closing downloaded resume: %s", err)
 	}
 	body := new(bytes.Buffer)
 	writer := multipart.NewWriter(body)
 	part, _ := writer.CreateFormFile("key", "main")
-	if _, err = part.Write(fileContents); err != nil {
+	if _, err := part.Write(fileContents); err != nil {
 		t.Errorf("Error writing file to request: %s", err)
 	}
 	r, _ := http.NewRequest("POST", "/", body)
 	r.Header.Add("Content-Type", writer.FormDataContentType())
-	if err = writer.Close(); err != nil {
+	if err := writer.Close(); err != nil {
 		t.Errorf("Closing multipart writer")
 	}
 	rr := executeRequest(r, encryptResume)
