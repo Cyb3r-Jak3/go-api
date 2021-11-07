@@ -19,33 +19,42 @@ func TestGetResume(t *testing.T) {
 }
 
 func TestEncryptResume(t *testing.T) {
-	common.DownloadFile("https://www.jwhite.network/keys/WebsitePublic.asc", "key.asc")
+	_, err := common.DownloadFile("https://www.jwhite.network/keys/WebsitePublic.asc", "key.asc")
+	if err != nil {
+		t.Errorf("Error downloading resume: %s", err)
+	}
 	file, _ := os.Open("key.asc")
 	fileContents, _ := ioutil.ReadAll(file)
-	file.Close()
+	if err = file.Close(); err != nil {
+		t.Errorf("Error closing downloaded resume: %s", err)
+	}
 	body := new(bytes.Buffer)
 	writer := multipart.NewWriter(body)
 	part, _ := writer.CreateFormFile("key", "key.asc")
-	part.Write(fileContents)
+	if _, err = part.Write(fileContents); err != nil {
+		t.Errorf("Error writing file to request: %s", err)
+	}
 	r, _ := http.NewRequest("POST", "/", body)
 	r.Header.Add("Content-Type", writer.FormDataContentType())
-	writer.Close()
+	if err = writer.Close(); err != nil {
+		t.Errorf("Closing multipart writer")
+	}
 	rr := executeRequest(r, encryptResume)
 	checkResponse(t, rr, http.StatusOK)
 }
 
 func BenchmarkEncryptResume(b *testing.B) {
-	common.DownloadFile("https://www.jwhite.network/keys/WebsitePublic.asc", "key.asc")
+	_, _ = common.DownloadFile("https://www.jwhite.network/keys/WebsitePublic.asc", "key.asc")
 	file, _ := os.Open("key.asc")
 	fileContents, _ := ioutil.ReadAll(file)
-	file.Close()
+	_ = file.Close()
 	body := new(bytes.Buffer)
 	writer := multipart.NewWriter(body)
 	part, _ := writer.CreateFormFile("key", "key.asc")
-	part.Write(fileContents)
+	_, _ = part.Write(fileContents)
 	r, _ := http.NewRequest("POST", "/", body)
 	r.Header.Add("Content-Type", writer.FormDataContentType())
-	writer.Close()
+	_ = writer.Close()
 	b.ReportAllocs()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -57,14 +66,21 @@ func BenchmarkEncryptResume(b *testing.B) {
 func TestEncryptResumeBadFile(t *testing.T) {
 	file, _ := os.Open("main.go")
 	fileContents, _ := ioutil.ReadAll(file)
-	file.Close()
+	err := file.Close()
+	if err = file.Close(); err != nil {
+		t.Errorf("Error closing downloaded resume: %s", err)
+	}
 	body := new(bytes.Buffer)
 	writer := multipart.NewWriter(body)
 	part, _ := writer.CreateFormFile("key", "main")
-	part.Write(fileContents)
+	if _, err = part.Write(fileContents); err != nil {
+		t.Errorf("Error writing file to request: %s", err)
+	}
 	r, _ := http.NewRequest("POST", "/", body)
 	r.Header.Add("Content-Type", writer.FormDataContentType())
-	writer.Close()
+	if err = writer.Close(); err != nil {
+		t.Errorf("Closing multipart writer")
+	}
 	rr := executeRequest(r, encryptResume)
 	checkResponse(t, rr, http.StatusInternalServerError)
 }

@@ -8,8 +8,8 @@ import (
 
 func executeRequest(req *http.Request, responseFunction func(w http.ResponseWriter, r *http.Request)) *httptest.ResponseRecorder {
 	rr := httptest.NewRecorder()
-	dummyHttp := http.HandlerFunc(responseFunction)
-	dummyHttp.ServeHTTP(rr, req)
+	dummyHTTP := http.HandlerFunc(responseFunction)
+	dummyHTTP.ServeHTTP(rr, req)
 	return rr
 }
 
