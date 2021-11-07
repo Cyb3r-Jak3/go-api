@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 
-	common "github.com/Cyb3r-Jak3/common/v2"
+	"github.com/Cyb3r-Jak3/common/v4"
 )
 
 //GravatarRequestBody represents the expected incoming JSON
@@ -16,8 +16,8 @@ type GravatarRequestBody struct {
 	Email string `json:"email"`
 }
 
-//GravatarResponsetBody represents the outgoing JSON
-type GravatarResponsetBody struct {
+//GravatarResponseBody represents the outgoing JSON
+type GravatarResponseBody struct {
 	Hash string `json:"hash"`
 }
 
@@ -39,7 +39,7 @@ func miscGravatarHash(w http.ResponseWriter, req *http.Request) {
 	}
 	hash := md5.Sum([]byte(strings.TrimSpace(RequestBody.Email)))
 
-	common.JSONMarshalResponse(w, &GravatarResponsetBody{Hash: hex.EncodeToString(hash[:])})
+	common.JSONMarshalResponse(w, &GravatarResponseBody{Hash: hex.EncodeToString(hash[:])})
 }
 
 //StringRequestBody represents the expected incoming JSON

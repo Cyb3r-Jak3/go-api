@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	common "github.com/Cyb3r-Jak3/common/v2"
+	"github.com/Cyb3r-Jak3/common/v4"
 	"github.com/ProtonMail/gopenpgp/v2/helper"
 )
 
