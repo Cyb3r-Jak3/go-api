@@ -11,8 +11,8 @@ else
 endif
 
 lint:
-	go vet 
-	golint -set_exit_status 
+	go vet ./...
+	golangci-lint run -E revive,gofmt ./...
 
 test:
 	go test -race -v -coverprofile="c.out" ./...

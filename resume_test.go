@@ -8,7 +8,7 @@ import (
 	"os"
 	"testing"
 
-	common "github.com/Cyb3r-Jak3/common/v2"
+	"github.com/Cyb3r-Jak3/common/v4"
 )
 
 func TestGetResume(t *testing.T) {

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	common "github.com/Cyb3r-Jak3/common/v2"
+	"github.com/Cyb3r-Jak3/common/v4"
 	"github.com/google/go-github/v39/github"
 )
 
@@ -41,7 +41,7 @@ func gitRepos(w http.ResponseWriter, req *http.Request) {
 	now := time.Now()
 	cacheTime := now.Add(-cacheTime * time.Hour)
 	if gitReposCache.CheckTime.After(cacheTime) {
-		log.Debug("Serveing cache repos")
+		log.Debug("Serving cache repos")
 		common.JSONMarshalResponse(w, gitReposCache.repos)
 		return
 	}
@@ -61,7 +61,7 @@ func gitReposList(w http.ResponseWriter, req *http.Request) {
 	now := time.Now()
 	cacheTime := now.Add(-cacheTime * time.Hour)
 	if gitReposCache.CheckTime.After(cacheTime) {
-		log.Debug("Serveing cache repos list")
+		log.Debug("Serving cache repos list")
 		common.JSONMarshalResponse(w, gitReposCache.condensedRepoInfo)
 		return
 	}
@@ -86,13 +86,13 @@ func gitUser(w http.ResponseWriter, req *http.Request) {
 	now := time.Now()
 	cacheTime := now.Add(-cacheTime * time.Hour)
 	if gitUserInfo.CheckTime.After(cacheTime) {
-		log.Debug("Serveing cache user")
+		log.Debug("Serving cache user")
 		common.JSONMarshalResponse(w, gitUserInfo)
 		return
 	}
 	user, _, err := githubClient.Users.Get(context.TODO(), githubUser)
 	if err != nil {
-		httpError(w, err, "Error gettings GitHub User", http.StatusInternalServerError)
+		httpError(w, err, "Error getting GitHub User", http.StatusInternalServerError)
 		return
 	}
 	publicEmail := "cyb3rjak3@pm.me"

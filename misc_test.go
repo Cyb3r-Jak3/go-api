@@ -13,7 +13,7 @@ func TestMiscGravatar(t *testing.T) {
 	r.Header.Set("Content-Type", "application/json")
 	rr := executeRequest(r, miscGravatarHash)
 	checkResponse(t, rr, http.StatusOK)
-	var bodyResponse GravatarResponsetBody
+	var bodyResponse GravatarResponseBody
 	err := json.Unmarshal(rr.Body.Bytes(), &bodyResponse)
 	if err != nil {
 		t.Errorf("Unable to marshal response JSON. %s\n", err)
