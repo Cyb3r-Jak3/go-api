@@ -2,16 +2,15 @@ package main
 
 import (
 	"fmt"
-	"net/http"
-
 	"github.com/Cyb3r-Jak3/common/v4"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 	"github.com/sirupsen/logrus"
+	"net/http"
 )
 
 var (
-	corsdomains = []string{"https://*.jwhite.network"}
+	CORSDomains = []string{"https://*.jwhite.network", "https://*.cyberjake.xyz"}
 	log         = logrus.New()
 	host        string
 	port        string
@@ -24,7 +23,7 @@ func httpError(w http.ResponseWriter, err error, message string, statusCode int)
 }
 
 func redirect(w http.ResponseWriter, req *http.Request) {
-	http.Redirect(w, req, "https://www.jwhite.network", http.StatusPermanentRedirect)
+	http.Redirect(w, req, fmt.Sprintf("https://%s", req.URL.Host), http.StatusPermanentRedirect)
 }
 
 func init() {
@@ -34,7 +33,7 @@ func init() {
 	prod := common.GetEnv("PRODUCTION", "FALSE") == "TRUE"
 	if prod {
 		c = cors.New(cors.Options{
-			AllowedOrigins: corsdomains,
+			AllowedOrigins: CORSDomains,
 		})
 		log.SetLevel(logrus.WarnLevel)
 	} else {
