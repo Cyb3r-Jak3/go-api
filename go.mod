@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/Cyb3r-Jak3/common/v4 v4.0.0-20211106194724-3d2778ea2183
-	github.com/ProtonMail/gopenpgp/v2 v2.2.5
+	github.com/ProtonMail/gopenpgp/v2 v2.3.0
 	github.com/google/go-github/v39 v39.2.0
 	github.com/gorilla/mux v1.8.0
 	github.com/rs/cors v1.8.0
@@ -12,7 +12,7 @@ require (
 )
 
 require (
-	github.com/ProtonMail/go-crypto v0.0.0-20210920160938-87db9fbc61c7 // indirect
+	github.com/ProtonMail/go-crypto v0.0.0-20211112122917-428f8eabeeb3 // indirect
 	github.com/ProtonMail/go-mime v0.0.0-20190923161245-9b5a4261663a // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
