@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/Cyb3r-Jak3/common/v4"
-	"github.com/google/go-github/v39/github"
+	"github.com/google/go-github/v40/github"
 )
 
 type condensedRepoInfo struct {

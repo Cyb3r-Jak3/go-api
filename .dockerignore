@@ -20,4 +20,5 @@ api
 key.asc
 README.md
 LICENSE
-.git**
+.git*/**
+.idea
