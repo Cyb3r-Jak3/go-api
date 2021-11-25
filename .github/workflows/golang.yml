@@ -60,7 +60,7 @@ jobs:
         sarif_file: security.sarif
 
     - name: Build
-      run: go build -o api-${{ github.sha }}
+      run: go build -o api-${{ github.sha }} ./...
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
