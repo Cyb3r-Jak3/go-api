@@ -7,7 +7,7 @@ require (
 	github.com/ProtonMail/gopenpgp/v2 v2.3.1
 	github.com/google/go-github/v40 v40.0.0
 	github.com/gorilla/mux v1.8.0
-	github.com/rs/cors v1.8.0
+	github.com/rs/cors v1.8.2
 	github.com/sirupsen/logrus v1.8.1
 )
 
