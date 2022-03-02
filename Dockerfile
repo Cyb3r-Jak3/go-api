@@ -2,7 +2,7 @@ FROM golang:1.17.3-alpine as build
 
 WORKDIR /go/src/app
 COPY . /go/src/app
-COPY ./git .
+COPY .git .
 ENV CGO_ENABLED=0
 ENV GO111MODULE=on
 RUN apk add make
