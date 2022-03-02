@@ -15,6 +15,10 @@ var (
 	host        string
 	port        string
 	c           *cors.Cors
+	Version     = ""
+	Date        = ""
+	Commit      = ""
+	Builder     = ""
 )
 
 func httpError(w http.ResponseWriter, err error, message string, statusCode int) {
@@ -44,6 +48,7 @@ func init() {
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", redirect)
+	r.HandleFunc("/version", VersionInfo)
 	r.NotFoundHandler = http.HandlerFunc(redirect)
 	r.HandleFunc("/encrypted_resume", common.AllowedMethod(encryptResume, "POST,OPTIONS"))
 	r.HandleFunc("/git/repos", common.AllowedMethod(gitRepos, "GET,OPTIONS"))
