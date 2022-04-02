@@ -18,7 +18,6 @@ var (
 	Version     = ""
 	Date        = ""
 	Commit      = ""
-	Builder     = ""
 )
 
 func httpError(w http.ResponseWriter, err error, message string, statusCode int) {

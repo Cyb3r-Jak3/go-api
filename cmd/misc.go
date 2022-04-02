@@ -82,6 +82,5 @@ func miscStringChange(w http.ResponseWriter, req *http.Request) {
 }
 
 func VersionInfo(w http.ResponseWriter, _ *http.Request) {
-	versionResponse := `{"Version": "` + Version + `", "Date": "` + Date + `", "Commit": "` + Commit + `", "Builder": "` + Builder + `"}`
-	common.JSONResponse(w, []byte(versionResponse))
+	common.JSONResponse(w, []byte(`{"Version": "` + Version + `", "Date": "` + Date + `", "Commit": "` + Commit + `"}`))
 }
