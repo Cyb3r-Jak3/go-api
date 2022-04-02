@@ -6,10 +6,12 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
+
+	"github.com/Cyb3r-Jak3/common/v4"
 )
 
 func TestMiscGravatar(t *testing.T) {
-	r, _ := http.NewRequest("POST", "/", bytes.NewBuffer([]byte(`{"email": "jake@jwhite.network"}`)))
+	r, _ := http.NewRequest("POST", "/", bytes.NewBuffer([]byte(`{"email": "git@cyberjake.xyz"}`)))
 	r.Header.Set("Content-Type", "application/json")
 	rr := executeRequest(r, miscGravatarHash)
 	checkResponse(t, rr, http.StatusOK)
@@ -26,7 +28,7 @@ func TestMiscGravatar(t *testing.T) {
 }
 
 func BenchmarkMiscGravatar(b *testing.B) {
-	r, _ := http.NewRequest("POST", "/", bytes.NewBuffer([]byte(`{"email": "jake@jwhite.network"}`)))
+	r, _ := http.NewRequest("POST", "/", bytes.NewBuffer([]byte(`{"email": "git@cyberjake.xyz"}`)))
 	r.Header.Set("Content-Type", "application/json")
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -76,6 +78,17 @@ func TestMiscString(t *testing.T) {
 	}
 }
 
+func TestVersionInfo(t *testing.T) {
+	r, _ := http.NewRequest("GET", "/", nil)
+	rr := executeRequest(r, VersionInfo)
+	checkResponse(t, rr, http.StatusOK)
+	headers := rr.Header()
+	jsonHeader := headers.Get("Content-Type")
+	if jsonHeader != common.JSONApplicationType {
+		t.Errorf("Version response was not type content. It was %s", jsonHeader)
+	}
+}
+
 func BenchmarkMiscStringToLower(b *testing.B) {
 	r, _ := http.NewRequest("POST", "/", bytes.NewBuffer([]byte(`{"string": "HELLO WORLD", "modification": "l"}`)))
 	r.Header.Set("Content-Type", "application/json")
@@ -103,5 +116,14 @@ func BenchmarkMiscStringToTitle(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		executeRequest(r, miscStringChange)
+	}
+}
+
+func BenchmarkVersionInfo(b *testing.B) {
+	r, _ := http.NewRequest("GET", "/", nil)
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		executeRequest(r, VersionInfo)
 	}
 }

@@ -2,13 +2,13 @@
 
 full-test: lint test
 
-ifeq ($(OS),Windows_NT)
-    RM = del //Q //F
-    RRM = rmdir //Q //S
-else
-    RM = rm -f
-    RRM = rm -f -r
-endif
+GIT_COMMIT ?= $(shell git rev-parse --verify HEAD)
+GIT_VERSION ?= $(shell git describe --tags --always --dirty="-dev")
+DATE ?= $(shell date -u '+%Y-%m-%d %H:%M UTC')
+VERSION_FLAGS := -X "main.version=$(GIT_VERSION)" -X "main.date=$(DATE)" -X "main.commit=$(GIT_COMMIT)"
+
+build:
+	go build -ldflags='$(VERSION_FLAGS)' -o app ./...
 
 lint:
 	go vet ./...

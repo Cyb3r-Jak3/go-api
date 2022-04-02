@@ -15,6 +15,9 @@ var (
 	host        string
 	port        string
 	c           *cors.Cors
+	Version     = ""
+	Date        = ""
+	Commit      = ""
 )
 
 func httpError(w http.ResponseWriter, err error, message string, statusCode int) {
@@ -44,13 +47,14 @@ func init() {
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", redirect)
+	r.HandleFunc("/version", VersionInfo)
 	r.NotFoundHandler = http.HandlerFunc(redirect)
-	r.HandleFunc("/encrypted_resume", common.AllowedMethod(encryptResume, "POST,OPTIONS"))
-	r.HandleFunc("/git/repos", common.AllowedMethod(gitRepos, "GET,OPTIONS"))
-	r.HandleFunc("/git/repos/list", common.AllowedMethod(gitReposList, "GET,OPTIONS"))
-	r.HandleFunc("/git/user", common.AllowedMethod(gitUser, "GET,OPTIONS"))
-	r.HandleFunc("/misc/gravatar", common.AllowedMethod(miscGravatarHash, "POST,OPTIONS"))
-	r.HandleFunc("/misc/string", common.AllowedMethod(miscStringChange, "POST,OPTIONS"))
+	r.HandleFunc("/encrypted_resume", common.AllowedMethods(encryptResume, "POST,OPTIONS"))
+	r.HandleFunc("/git/repos", common.AllowedMethods(gitRepos, "GET,OPTIONS"))
+	r.HandleFunc("/git/repos/list", common.AllowedMethods(gitReposList, "GET,OPTIONS"))
+	r.HandleFunc("/git/user", common.AllowedMethods(gitUser, "GET,OPTIONS"))
+	r.HandleFunc("/misc/gravatar", common.AllowedMethods(miscGravatarHash, "POST,OPTIONS"))
+	r.HandleFunc("/misc/string", common.AllowedMethods(miscStringChange, "POST,OPTIONS"))
 	log.Info("Starting")
 	handler := c.Handler(r)
 	if err := http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), handler); err != nil {

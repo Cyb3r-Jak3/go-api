@@ -80,3 +80,7 @@ func miscStringChange(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, "Need to specify a modification", http.StatusBadRequest)
 	}
 }
+
+func VersionInfo(w http.ResponseWriter, _ *http.Request) {
+	common.JSONResponse(w, []byte(`{"Version": "`+Version+`", "Date": "`+Date+`", "Commit": "`+Commit+`"}`))
+}
