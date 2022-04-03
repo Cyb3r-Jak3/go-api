@@ -1,16 +1,16 @@
 package main
 
 import (
-	"fmt"
+	"net/http"
+
 	"github.com/Cyb3r-Jak3/common/v4"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 	"github.com/sirupsen/logrus"
-	"net/http"
 )
 
 var (
-	CORSDomains = []string{"https://*.jwhite.network", "https://*.cyberjake.xyz"}
+	CORSDomains = []string{"https://*.cyberjake.xyz"}
 	log         = logrus.New()
 	host        string
 	port        string
@@ -26,7 +26,7 @@ func httpError(w http.ResponseWriter, err error, message string, statusCode int)
 }
 
 func redirect(w http.ResponseWriter, req *http.Request) {
-	http.Redirect(w, req, fmt.Sprintf("https://%s", req.URL.Host), http.StatusPermanentRedirect)
+	http.Redirect(w, req, "https://cyberjake.xyz", http.StatusPermanentRedirect)
 }
 
 func init() {
@@ -50,14 +50,10 @@ func main() {
 	r.HandleFunc("/version", VersionInfo)
 	r.NotFoundHandler = http.HandlerFunc(redirect)
 	r.HandleFunc("/encrypted_resume", common.AllowedMethods(encryptResume, "POST,OPTIONS"))
-	r.HandleFunc("/git/repos", common.AllowedMethods(gitRepos, "GET,OPTIONS"))
-	r.HandleFunc("/git/repos/list", common.AllowedMethods(gitReposList, "GET,OPTIONS"))
-	r.HandleFunc("/git/user", common.AllowedMethods(gitUser, "GET,OPTIONS"))
-	r.HandleFunc("/misc/gravatar", common.AllowedMethods(miscGravatarHash, "POST,OPTIONS"))
 	r.HandleFunc("/misc/string", common.AllowedMethods(miscStringChange, "POST,OPTIONS"))
-	log.Info("Starting")
-	handler := c.Handler(r)
-	if err := http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), handler); err != nil {
+	bindAddress := host + ":" + port
+	log.Info("Starting on " + bindAddress)
+	if err := http.ListenAndServe(bindAddress, c.Handler(r)); err != nil {
 		log.WithError(err).Fatal("Error running server")
 	}
 

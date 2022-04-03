@@ -10,33 +10,6 @@ import (
 	"github.com/Cyb3r-Jak3/common/v4"
 )
 
-func TestMiscGravatar(t *testing.T) {
-	r, _ := http.NewRequest("POST", "/", bytes.NewBuffer([]byte(`{"email": "git@cyberjake.xyz"}`)))
-	r.Header.Set("Content-Type", "application/json")
-	rr := executeRequest(r, miscGravatarHash)
-	checkResponse(t, rr, http.StatusOK)
-	var bodyResponse GravatarResponseBody
-	err := json.Unmarshal(rr.Body.Bytes(), &bodyResponse)
-	if err != nil {
-		t.Errorf("Unable to marshal response JSON. %s\n", err)
-	}
-	correctHash := "53bb2d43885821c16259c5311d3755d8"
-	if bodyResponse.Hash != correctHash {
-		t.Errorf("Got wrong Gravatar hash. Wanted %s Got %s", correctHash, bodyResponse.Hash)
-	}
-
-}
-
-func BenchmarkMiscGravatar(b *testing.B) {
-	r, _ := http.NewRequest("POST", "/", bytes.NewBuffer([]byte(`{"email": "git@cyberjake.xyz"}`)))
-	r.Header.Set("Content-Type", "application/json")
-	b.ReportAllocs()
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		executeRequest(r, miscGravatarHash)
-	}
-}
-
 type TestString struct {
 	String         string
 	Modification   string
