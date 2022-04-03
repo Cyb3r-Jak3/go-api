@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	resumeURL      = "https://www.jwhite.network/resumes/JacobWhiteResume.pdf"
+	resumeURL      = "https://cyberjake.xyz/resumes/JacobWhiteResume.pdf"
 	resumeFilePath = "./resume.pdf"
 )
 
