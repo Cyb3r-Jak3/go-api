@@ -19,7 +19,7 @@ func TestGetResume(t *testing.T) {
 }
 
 func TestEncryptResume(t *testing.T) {
-	_, err := common.DownloadFile("https://www.jwhite.network/keys/WebsitePublic.asc", "key.asc")
+	_, err := common.DownloadFile("https://cyberjake.xyz/keys/WebsitePublic.asc", "key.asc")
 	if err != nil {
 		t.Errorf("Error downloading resume: %s", err)
 	}
