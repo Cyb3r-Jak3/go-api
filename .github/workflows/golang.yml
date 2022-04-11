@@ -63,7 +63,7 @@ jobs:
       run: go build -o api-${{ github.sha }} ./...
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: Artifacts
         path: |
