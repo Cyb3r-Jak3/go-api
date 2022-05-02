@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/Cyb3r-Jak3/common/v4 v4.2.0
-	github.com/ProtonMail/gopenpgp/v2 v2.4.6
+	github.com/ProtonMail/gopenpgp/v2 v2.4.7
 	github.com/gorilla/mux v1.8.0
 	github.com/rs/cors v1.8.2
 	github.com/sirupsen/logrus v1.8.1
