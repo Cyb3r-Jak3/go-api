@@ -39,7 +39,7 @@ jobs:
         path: |
           ~/go/pkg/mod
           ~/.cache/go-build
-        key: go-${{ hashFiles('**/go.sum', '**/go.mod') }}
+        key: go-${{ hashFiles('**/go.mod') }}-${{ hashFiles('**/go.sum') }}
 
     - name: Get Extra
       run: |
