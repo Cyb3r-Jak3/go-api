@@ -1,5 +1,7 @@
 # Go API Server
 
+# Replaced with https://github.com/Cyb3r-Jak3/workers-serverless-api
+
 ![Uptime 30 Days](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FCyb3r-Jak3%2Fuptime-stats%2Fmaster%2Fapi%2Fapi%2Fuptime-month.json)
 [![Build Docker](https://github.com/Cyb3r-Jak3/go-api/actions/workflows/docker.yml/badge.svg)](https://github.com/Cyb3r-Jak3/go-api/actions/workflows/docker.yml)
 [![Test Go](https://github.com/Cyb3r-Jak3/go-api/actions/workflows/golang.yml/badge.svg)](https://github.com/Cyb3r-Jak3/go-api/actions/workflows/golang.yml)
